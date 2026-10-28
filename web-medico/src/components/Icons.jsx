@@ -134,3 +134,35 @@ export function IconMetrica({ clave, ...p }) {
   const Icono = mapa[clave] ?? IconInfo;
   return <Icono {...p} />;
 }
+
+
+// ---------- Iconos de Información General ----------
+
+export const IconUsuario = (p) => (
+  <svg {...base} {...p}><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+);
+
+export const IconTelefono = (p) => (
+  <svg {...base} {...p}>
+    <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" />
+  </svg>
+);
+
+export const IconGota = (p) => (
+  <svg {...base} {...p}><path d="M12 2.7l5.7 5.7a8 8 0 1 1-11.4 0z" /></svg>
+);
+
+export const IconEstetoscopio = (p) => (
+  <svg {...base} {...p}>
+    <path d="M5 3v5a5 5 0 0 0 10 0V3M5 3H3M15 3h2" />
+    <path d="M10 13v2a5 5 0 0 0 10 0v-2" />
+    <circle cx="20" cy="11" r="2" />
+  </svg>
+);
+
+export const IconEdificio = (p) => (
+  <svg {...base} {...p}>
+    <rect x="4" y="3" width="16" height="18" rx="2" />
+    <path d="M9 21v-4h6v4M12 7v4M10 9h4" />
+  </svg>
+);

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PanelHeader, { PESTANAS } from '../components/panel/PanelHeader.jsx';
 import NeomaAI from './panel/NeomaAI.jsx';
+import InformacionGeneral from './panel/InformacionGeneral.jsx';
 import Proximamente from './panel/Proximamente.jsx';
 import usePanelPaciente from '../hooks/usePanelPaciente.js';
 import { tieneDatos } from '../services/panelService.js';
@@ -25,13 +26,16 @@ export default function PanelPaciente({ paciente, onCerrarSesion }) {
         onCerrarSesion={onCerrarSesion}
       />
 
-      <main className="panel__contenido contenedor">
+       <main className="panel__contenido contenedor">
         {error && (
           <p className="panel__error" role="alert">
             <IconAlerta /> No pudimos cargar la información del paciente. {error}
           </p>
         )}
-        {pestana === 'ia' ? <NeomaAI datos={datos} cargando={cargando} /> : <Proximamente titulo={nombrePestana} />}
+
+        {pestana === 'ia' && <NeomaAI datos={datos} cargando={cargando} />}
+        {pestana === 'general' && <InformacionGeneral paciente={paciente} datos={datos} cargando={cargando} />}
+        {pestana !== 'ia' && pestana !== 'general' && <Proximamente titulo={nombrePestana} />}
       </main>
 
       <footer className="panel__pie contenedor">

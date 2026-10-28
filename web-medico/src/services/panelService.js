@@ -42,6 +42,30 @@
 const metricaVacia = () => ({ actual: null, variacion: null, nota: null, serie: [] });
 const extremoVacio = () => ({ valor: null, fecha: null });
 
+
+/** Pestaña "Información General".
+ */
+
+const informacionVacia = () => ({
+  foto: null,
+  nombreCompleto: null,
+  tipoDocumento: null,
+  documento: null,
+  fechaNacimiento: null,
+  genero: null,
+  tipoSangre: null,
+  estado: null,
+  correo: null,
+  celular: null,
+  direccion: null,
+  ciudad: null,
+  eps: null,
+  regimen: null,
+  numeroAfiliacion: null,
+  contactoEmergencia: { nombre: null, parentesco: null, celular: null },
+  antecedentes: { alergias: [], enfermedades: [], cirugias: [], familiares: [] },
+});
+
 export function panelVacio() {
   return {
     perfil: { edad: null, sexo: null },
@@ -66,6 +90,7 @@ export function panelVacio() {
       spo2Min: extremoVacio(),
       estresMax: extremoVacio(),
     },
+    informacion: informacionVacia(),
   };
 }
 
@@ -95,4 +120,6 @@ export function tieneDatos(panel) {
 export async function obtenerPanel(documento, token) {
   await new Promise((r) => setTimeout(r, 600));
   return panelVacio();
+
+
 }
