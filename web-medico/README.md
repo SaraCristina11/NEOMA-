@@ -17,33 +17,61 @@ Para generar la versión final: `npm run build` (queda en la carpeta `dist/`).
 
 ## Flujo
 
-1. **Acceso Médico**: documento del paciente (cédula de 6 a 10 dígitos; acepta puntos y espacios). Si no es válido, el campo se pone en rojo con el mensaje de error.
-2. **Código de Verificación**: 4 casillas que avanzan solas, aceptan pegar el código y retroceden con Backspace. Si el código es incorrecto, las casillas se ponen en rojo y se limpian.
-   - El código vence en 5 minutos (cuenta regresiva visible).
-   - "Reenviar código" se habilita cada 30 segundos.
-   - Máximo 5 intentos; después hay que reenviar un código nuevo.
-3. **Acceso autorizado**: pantalla puente donde luego irá el panel clínico.
+1. **Acceso Médico**: documento del paciente (cédula de 6 a 10 dígitos). Si no es válido, el campo se pone en rojo.
+2. **Código de Verificación**: 4 casillas, vence en 5 minutos, reenviar cada 30 s, máximo 5 intentos.
+3. **Panel del paciente**: encabezado con datos del paciente y pestañas.
+   - **NEOMA AI** (listo, sin datos): Health Score, 4 métricas (FC, SpO₂, Sueño, Estrés), tendencia de 30 días,
+     Alertas Inteligentes, Resumen IA y valores extremos.
+   - Información General, Historia Clínica, Laboratorios y Medicamentos: "próximamente".
 
-> Código de prueba mientras no hay backend: **1234** (definido en `src/services/authService.js`). No aparece en la interfaz.
+> Código de prueba mientras no hay backend: **1234** (en `src/services/authService.js`).
+
+## Datos (base de datos)
+
+El panel **no tiene datos inventados**: cada recuadro muestra su estado vacío ("—", "Sin lecturas", "Sin alertas activas").
+Cuando exista el backend, solo se cambia la función `obtenerPanel` de `src/services/panelService.js`
+para que haga `fetch` al API. Arriba de ese archivo está documentada la forma exacta del JSON que debe devolver;
+si llega con esa forma, todos los recuadros se llenan solos.
 
 ## Estructura
 
 ```
 src/
-  App.jsx                    → controla los pasos del flujo
+  App.jsx                         → pasos: documento → código → panel
+  main.jsx
   components/
-    Header.jsx, Footer.jsx
-    AuthCard.jsx             → tarjeta blanca con barra verde + emblema
-    OtpInput.jsx             → casillas del código
-    Icons.jsx
+    Header.jsx, Footer.jsx        → encabezado y pie del acceso
+    AuthCard.jsx, OtpInput.jsx    → tarjeta de acceso y casillas del código
+    Icons.jsx                     → todos los iconos
+    panel/
+      PanelHeader.jsx             → encabezado del panel + pestañas
+      Comunes.jsx                 → piezas pequeñas (esqueleto, estado vacío, % de cambio)
+      HealthScoreCard.jsx         → anillo 0-100 y desglose
+      MetricCard.jsx              → tarjeta de FC / SpO₂ / Sueño / Estrés
+      Sparkline.jsx               → mini gráfica de cada tarjeta
+      TendenciaChart.jsx          → gráfica grande de 30 días
+      AlertasCard.jsx             → Alertas Inteligentes
+      ResumenIACard.jsx           → Resumen IA
+      ExtremosGrid.jsx            → FC máx, sueño mín, SpO₂ mín, pico de estrés
   pages/
     AccesoDocumento.jsx
     CodigoVerificacion.jsx
-    AccesoConcedido.jsx
-  services/authService.js    → MOCK de la API (aquí se conecta el backend)
-  utils/validators.js
-  styles/global.css          → paleta NEOMA en variables CSS
-public/logo/                 → logos PNG sin fondo (verde y blanco)
+    PanelPaciente.jsx             → arma el panel y cambia de pestaña
+    panel/
+      NeomaAI.jsx                 → pestaña NEOMA AI (acomoda los recuadros)
+      Proximamente.jsx            → pestañas aún no construidas
+  services/
+    authService.js                → API de acceso (mock)
+    panelService.js               → API del panel (devuelve vacío)
+  hooks/
+    usePanelPaciente.js           → carga los datos del panel
+    useAncho.js                   → mide el ancho para las gráficas
+  utils/
+    validators.js, formato.js, metricas.js, graficas.js
+  styles/
+    global.css                    → colores de marca y acceso
+    panel.css                     → estilos del panel
+public/logo/                      → logos PNG sin fondo
 ```
 
 ## Paleta (manual de marca)
@@ -62,8 +90,7 @@ Tipografía: **Sora** (títulos, como en el manual) e **Inter** (texto).
 ## Stack recomendado
 
 - **React + Vite + CSS** (este proyecto). Sin librerías de UI para mantenerlo liviano y fiel al diseño.
-- **React Router** cuando agreguen el panel del paciente (`/acceso`, `/paciente/:id`).
+- **React Router** si más adelante quieren URLs propias por pestaña (`/paciente/:id/general`).
 - **Python con FastAPI** para el backend de este módulo (coincide con la documentación técnica): endpoints `POST /acceso/solicitar` y `POST /acceso/validar`, que devuelven un token JWT.
-- **Recharts** para las gráficas de tendencias de 30 días (RF-015).
 
 Para conectar el backend, solo cambien las funciones de `src/services/authService.js` por `fetch` reales y definan `VITE_API_URL` en un archivo `.env`.

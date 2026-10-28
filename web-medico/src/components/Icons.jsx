@@ -54,3 +54,83 @@ export const IconCheck = (p) => (
 );
 
 export const Spinner = () => <span className="spinner" aria-hidden="true" />;
+
+// ---------- Iconos del panel ----------
+export const IconCorazon = (p) => (
+  <svg {...base} {...p}><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" /></svg>
+);
+
+export const IconViento = (p) => (
+  <svg {...base} {...p}><path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h7" /></svg>
+);
+
+export const IconLuna = (p) => (
+  <svg {...base} {...p}><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+);
+
+export const IconRayo = (p) => (
+  <svg {...base} {...p}><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+);
+
+export const IconPasos = (p) => (
+  <svg {...base} {...p}>
+    <path d="M7 3c1.7 0 3 1.8 3 4.5S8.8 13 7.5 13 5 11.3 5 8.5 5.3 3 7 3zM5.5 16h4l-.4 2.6a2 2 0 0 1-4 .1z" />
+    <path d="M17 6c1.7 0 2 3 2 5.5S17.7 16 16.5 16 14 14.3 14 11.5 15.3 6 17 6zM14.6 19h4l-.4 1.6a2 2 0 0 1-3.5 0z" />
+  </svg>
+);
+
+export const IconDescarga = (p) => (
+  <svg {...base} {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+);
+
+export const IconReloj = (p) => (
+  <svg {...base} {...p}>
+    <rect x="6" y="6" width="12" height="12" rx="3" />
+    <path d="M9 6l.6-3h4.8l.6 3M9 18l.6 3h4.8l.6-3" />
+  </svg>
+);
+
+export const IconTriangulo = (p) => (
+  <svg {...base} {...p}>
+    <path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+    <path d="M12 9v4M12 17h.01" />
+  </svg>
+);
+
+export const IconChispa = (p) => (
+  <svg {...base} {...p}>
+    <path d="M12 3l1.8 4.6L18 9.5l-4.2 1.9L12 16l-1.8-4.6L6 9.5l4.2-1.9z" />
+    <path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8zM5 3l.6 1.4L7 5l-1.4.6L5 7l-.6-1.4L3 5l1.4-.6z" />
+  </svg>
+);
+
+export const IconInfo = (p) => (
+  <svg {...base} {...p}><circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" /></svg>
+);
+
+export const IconX = (p) => (
+  <svg {...base} {...p}><path d="M18 6L6 18M6 6l12 12" /></svg>
+);
+
+export const IconSube = (p) => (
+  <svg {...base} {...p}><path d="M3 17l6-6 4 4 8-8M15 7h6v6" /></svg>
+);
+
+export const IconBaja = (p) => (
+  <svg {...base} {...p}><path d="M3 7l6 6 4-4 8 8M15 17h6v-6" /></svg>
+);
+
+export const IconGrafica = (p) => (
+  <svg {...base} {...p}><path d="M3 3v18h18M7 15l4-4 3 3 5-6" /></svg>
+);
+
+export const IconCampana = (p) => (
+  <svg {...base} {...p}><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" /></svg>
+);
+
+/** Icono según la métrica (fc, spo2, sueno, estres, actividad). */
+export function IconMetrica({ clave, ...p }) {
+  const mapa = { fc: IconCorazon, spo2: IconViento, sueno: IconLuna, estres: IconRayo, actividad: IconPasos };
+  const Icono = mapa[clave] ?? IconInfo;
+  return <Icono {...p} />;
+}

@@ -3,13 +3,13 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import AccesoDocumento from './pages/AccesoDocumento.jsx';
 import CodigoVerificacion from './pages/CodigoVerificacion.jsx';
-import AccesoConcedido from './pages/AccesoConcedido.jsx';
+import PanelPaciente from './pages/PanelPaciente.jsx';
 
 /**
- * Flujo de acceso del médico:
- *   1. documento  → el médico escribe el documento del paciente
- *   2. codigo     → el paciente recibe un código en su app NEOMA y se lo dicta al médico
- *   3. concedido  → acceso autorizado (aquí conectará luego el panel clínico)
+ * Flujo del médico:
+ *   1. documento → el médico escribe el documento del paciente
+ *   2. codigo    → el paciente recibe un código en su app NEOMA y se lo dicta al médico
+ *   3. panel     → panel del paciente (pestaña NEOMA AI y las demás)
  */
 export default function App() {
   const [paso, setPaso] = useState('documento');
@@ -28,6 +28,11 @@ export default function App() {
     setPaso('documento');
   };
 
+  // El panel tiene su propio encabezado, por eso va aparte
+  if (paso === 'panel') {
+    return <PanelPaciente paciente={paciente} onCerrarSesion={reiniciar} />;
+  }
+
   return (
     <div className="app">
       <Header />
@@ -40,10 +45,9 @@ export default function App() {
               solicitud={solicitud}
               onVolver={reiniciar}
               onNuevaSolicitud={setSolicitud}
-              onValidado={() => setPaso('concedido')}
+              onValidado={() => setPaso('panel')}
             />
           )}
-          {paso === 'concedido' && <AccesoConcedido paciente={paciente} onSalir={reiniciar} />}
         </div>
         <Footer />
       </main>
