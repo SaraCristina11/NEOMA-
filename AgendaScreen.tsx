@@ -8,6 +8,9 @@ export default function AgendaScreen() {
   const [modalCitaVisible, setModalCitaVisible] = useState(false);
   const [modalMedVisible, setModalMedVisible] = useState(false);
 
+  // Estado para controlar el menú flotante de notificaciones en la Agenda
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
   // ARREGLOS Y ESTADOS VACÍOS (A LA ESPERA DEL BACKEND / API)
   const [citasList] = useState<Array<any>>([]);
   const [medicamentosList] = useState<Array<any>>([]);
@@ -24,10 +27,57 @@ export default function AgendaScreen() {
             </View>
             <Text style={styles.brandName}>NEOMA</Text>
           </View>
-          <TouchableOpacity style={styles.notificationBtn}>
+
+          {/* Botón de Notificaciones Interactivo */}
+          <TouchableOpacity 
+            style={styles.notificationBtn}
+            onPress={() => setIsNotificationOpen(!isNotificationOpen)}
+            activeOpacity={0.8}
+          >
             <Feather name="bell" size={18} color="#1E3A2B" />
           </TouchableOpacity>
         </View>
+
+        {/* MENÚ FLOTANTE DE NOTIFICACIONES EN LA AGENDA */}
+        {isNotificationOpen && (
+          <View style={{
+            position: 'absolute',
+            top: 60,
+            right: 16,
+            width: 220,
+            backgroundColor: '#FFFFFF',
+            borderRadius: 16,
+            padding: 12,
+            borderWidth: 1,
+            borderColor: '#E2E8E0',
+            zIndex: 100,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            elevation: 5,
+          }}>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 8,
+              borderBottomWidth: 1,
+              borderBottomColor: '#F4F7F4',
+              paddingBottom: 6,
+            }}>
+              <Text style={{ fontSize: 12, fontWeight: '800', color: '#1E3A2B' }}>Notificaciones</Text>
+              <TouchableOpacity onPress={() => setIsNotificationOpen(false)}>
+                <Feather name="x" size={14} color="#828B84" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ paddingVertical: 12, alignItems: 'center', gap: 6 }}>
+              <Feather name="bell-off" size={16} color="#828B84" />
+              <Text style={{ fontSize: 11, color: '#828B84', fontStyle: 'italic' }}>Sin notificaciones</Text>
+            </View>
+          </View>
+        )}
 
         <View style={styles.titleSection}>
           <Text style={styles.mainTitle}>Agenda de Salud</Text>

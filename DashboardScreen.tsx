@@ -2,10 +2,19 @@ import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { dashboardStyles as styles } from './styles/Dashboard';
-import AgendaScreen from './AgendaScreen'; // <--- 1. Importamos la Agenda
+import AgendaScreen from './AgendaScreen';
+import HistorialScreen from './HistorialScreen';
+import Perfil from './Perfil';
 
-export default function DashboardScreen() {
+interface DashboardProps {
+  onLogout?: () => void;
+}
+
+export default function DashboardScreen({ onLogout }: DashboardProps) {
   const [activeTab, setActiveTab] = useState<'inicio' | 'agenda' | 'historial' | 'perfil'>('inicio');
+
+  // Estado para controlar el menú flotante de notificaciones en el Dashboard
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   // ESTADOS VACÍOS (A LA ESPERA DEL BACKEND)
   const [userData] = useState({
@@ -36,12 +45,10 @@ export default function DashboardScreen() {
     estadoConexion: 'Desconectado',
   });
 
-  const [insightsList] = useState<Array<any>>([]);
-
   return (
     <View style={styles.dashboardContainer}>
       
-      {/* 2. CONDICIONAL SEGÚN LA PESTAÑA ACTIVA */}
+      {/* CONDICIONAL SEGÚN LA PESTAÑA ACTIVA */}
       {activeTab === 'inicio' ? (
         <ScrollView contentContainerStyle={{ paddingBottom: 100 }} showsVerticalScrollIndicator={false}>
           
@@ -54,11 +61,57 @@ export default function DashboardScreen() {
               <Text style={styles.dashBrandName}>NEOMA</Text>
             </View>
 
-            <TouchableOpacity style={styles.notificationCircleBtn}>
+            {/* Botón de Notificaciones Interactivo */}
+            <TouchableOpacity 
+              style={styles.notificationCircleBtn}
+              onPress={() => setIsNotificationOpen(!isNotificationOpen)}
+              activeOpacity={0.8}
+            >
               <Feather name="bell" size={18} color="#1E3A2B" />
               <View style={styles.redBadgeDot} />
             </TouchableOpacity>
           </View>
+
+          {/* MENÚ FLOTANTE DE NOTIFICACIONES EN EL DASHBOARD */}
+          {isNotificationOpen && (
+            <View style={{
+              position: 'absolute',
+              top: 60,
+              right: 16,
+              width: 220,
+              backgroundColor: '#FFFFFF',
+              borderRadius: 16,
+              padding: 12,
+              borderWidth: 1,
+              borderColor: '#E2E8E0',
+              zIndex: 100,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.1,
+              shadowRadius: 8,
+              elevation: 5,
+            }}>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: 8,
+                borderBottomWidth: 1,
+                borderBottomColor: '#F4F7F4',
+                paddingBottom: 6,
+              }}>
+                <Text style={{ fontSize: 12, fontWeight: '800', color: '#1E3A2B' }}>Notificaciones</Text>
+                <TouchableOpacity onPress={() => setIsNotificationOpen(false)}>
+                  <Feather name="x" size={14} color="#828B84" />
+                </TouchableOpacity>
+              </View>
+
+              <View style={{ paddingVertical: 12, alignItems: 'center', gap: 6 }}>
+                <Feather name="bell-off" size={16} color="#828B84" />
+                <Text style={{ fontSize: 11, color: '#828B84', fontStyle: 'italic' }}>Sin notificaciones</Text>
+              </View>
+            </View>
+          )}
 
           {/* Saludo y Avatar */}
           <View style={styles.greetingRow}>
@@ -222,10 +275,10 @@ export default function DashboardScreen() {
         </ScrollView>
       ) : activeTab === 'agenda' ? (
         <AgendaScreen />
+      ) : activeTab === 'historial' ? (
+        <HistorialScreen />
       ) : (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: '#626B64' }}>Sección en desarrollo...</Text>
-        </View>
+        <Perfil onLogout={onLogout} />
       )}
 
       {/* Barra de Navegación Inferior */}

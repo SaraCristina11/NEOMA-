@@ -109,7 +109,8 @@ export default function App() {
   return (
     <>
       {currentScreen === 'dashboard' ? (
-        <DashboardScreen />
+        /* Pasamos la función onLogout para que devuelva al login */
+        <DashboardScreen onLogout={() => setCurrentScreen('login')} />
       ) : (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
