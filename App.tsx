@@ -3,6 +3,7 @@ import { Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { styles, theme } from './styles/loginStyles';
 import DashboardScreen from './DashboardScreen';
+import DashboardCuidador from './DashboardCuidador';
 
 export default function App() {
   // Estado único para controlar la pantalla actual y el rol seleccionado
@@ -109,8 +110,12 @@ export default function App() {
   return (
     <>
       {currentScreen === 'dashboard' ? (
-        /* Pasamos la función onLogout para que devuelva al login */
-        <DashboardScreen onLogout={() => setCurrentScreen('login')} />
+        // Si el rol es 'caregiver', muestra el Dashboard del Cuidador. Si no, muestra el del Paciente.
+        selectedRole === 'caregiver' ? (
+          <DashboardCuidador onLogout={() => setCurrentScreen('login')} />
+        ) : (
+          <DashboardScreen onLogout={() => setCurrentScreen('login')} />
+        )
       ) : (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -215,10 +220,39 @@ export default function App() {
                     </TouchableOpacity>
                   </View>
 
+                  {/* Botones de prueba para alternar entre Paciente y Cuidador en el Login */}
+                  <View style={{ flexDirection: 'row', gap: 10, marginTop: 16, marginBottom: 16 }}>
+                    <TouchableOpacity
+                      style={[
+                        styles.button,
+                        { flex: 1, backgroundColor: selectedRole === 'patient' ? '#1E3A2B' : '#E2E8E0' }
+                      ]}
+                      onPress={() => setSelectedRole('patient')}
+                    >
+                      <Text style={[styles.buttonText, { color: selectedRole === 'patient' ? '#FFF' : '#1E3A2B' }]}>
+                        Modo Paciente
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={[
+                        styles.button,
+                        { flex: 1, backgroundColor: selectedRole === 'caregiver' ? '#1E3A2B' : '#E2E8E0' }
+                      ]}
+                      onPress={() => setSelectedRole('caregiver')}
+                    >
+                      <Text style={[styles.buttonText, { color: selectedRole === 'caregiver' ? '#FFF' : '#1E3A2B' }]}>
+                        Modo Cuidador
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  {/* Botón principal de Ingresar */}
                   <TouchableOpacity
                     style={styles.button}
-                    activeOpacity={0.8}
-                    onPress={() => setCurrentScreen('dashboard')}
+                    onPress={() => {
+                      setCurrentScreen('dashboard');
+                    }}
                   >
                     <Text style={styles.buttonText}>INGRESAR</Text>
                   </TouchableOpacity>
