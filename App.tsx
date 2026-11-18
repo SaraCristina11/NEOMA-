@@ -4,11 +4,14 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import { styles, theme } from './styles/loginStyles';
 import DashboardScreen from './DashboardScreen';
 import DashboardCuidador from './DashboardCuidador';
+import Gestioncuidador from './Gestioncuidador';
+import Perfil from './Perfil';
+import Perfilcuidador from './Perfilcuidador';
 
 export default function App() {
   // Estado único para controlar la pantalla actual y el rol seleccionado
   const [currentScreen, setCurrentScreen] = useState<
-    'login' | 'register' | 'verify_method' | 'personal_data' | 'verify_code' | 'clinical_history' | 'create_password' | 'caregiver_link' | 'dashboard'
+    'login' | 'register' | 'verify_method' | 'personal_data' | 'verify_code' | 'clinical_history' | 'create_password' | 'caregiver_link' | 'dashboard' | 'gestion_cuidador' | 'perfil' | 'perfil_cuidador'
   >('login');
   const [selectedRole, setSelectedRole] = useState<'patient' | 'caregiver'>('patient');
 
@@ -110,11 +113,29 @@ export default function App() {
   return (
     <>
       {currentScreen === 'dashboard' ? (
-        // Si el rol es 'caregiver', muestra el Dashboard del Cuidador. Si no, muestra el del Paciente.
         selectedRole === 'caregiver' ? (
-          <DashboardCuidador onLogout={() => setCurrentScreen('login')} />
+          <DashboardCuidador 
+            onNavigate={(screen) => setCurrentScreen(screen as any)} 
+            onLogout={() => setCurrentScreen('login')} 
+          />
         ) : (
           <DashboardScreen onLogout={() => setCurrentScreen('login')} />
+        )
+      ) : currentScreen === 'gestion_cuidador' ? (
+        <Gestioncuidador 
+          onNavigate={(screen) => setCurrentScreen(screen as any)}
+          onLogout={() => setCurrentScreen('login')}
+        />
+      ) : currentScreen === 'perfil' || currentScreen === 'perfil_cuidador' ? (
+        selectedRole === 'caregiver' ? (
+          <Perfilcuidador 
+            onNavigate={(screen) => setCurrentScreen(screen as any)} 
+            onLogout={() => setCurrentScreen('login')} 
+          />
+        ) : (
+          <Perfil 
+            onLogout={() => setCurrentScreen('login')} 
+          />
         )
       ) : (
         <KeyboardAvoidingView

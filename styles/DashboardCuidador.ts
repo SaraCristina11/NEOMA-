@@ -255,45 +255,185 @@ export const dashboardCuidadorStyles = StyleSheet.create({
     marginTop: 2,
   },
 
-  // Tarjeta de Recomendaciones IA (Fondo Verde Oscuro continuo)
+  // Tarjeta Verde de Recomendaciones de IA Superior
   aiRecommendationCard: {
-    backgroundColor: '#1B3527',
-    borderRadius: 22,
-    padding: 18,
-    marginBottom: 16,
+    backgroundColor: '#1E3A2B',
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 20,
   },
-  aiHeaderRow: {
+  aiRecommendationHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    marginBottom: 14,
+    gap: 8,
+    marginBottom: 4,
   },
-  aiIconBadge: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    backgroundColor: '#E2EFE7',
+  aiNumText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#A7D7B5',
+  },
+  aiTitleText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  aiDescText: {
+    fontSize: 12,
+    color: '#D1E7D6',
+    lineHeight: 18,
+    marginLeft: 20,
+  },
+  aiFooterRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
+    paddingTop: 12,
+  },
+  aiFooterText: {
+    fontSize: 11,
+    color: '#A7D7B5',
+    fontWeight: '600',
+  },
+
+  // Tarjeta de Resumen de la IA (Estado del Paciente)
+  sectionCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.03,
+    shadowRadius: 6,
+    elevation: 1,
+  },
+  aiSummaryHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  heartIconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#E9F5EC',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  aiSubtitle: {
-    fontSize: 10,
+  aiSummarySub: {
+    fontSize: 9,
     fontWeight: '700',
-    color: '#A7D7B5',
+    color: '#828B84',
     letterSpacing: 0.5,
   },
-  aiHeaderTitle: {
+  aiSummaryTitle: {
     fontSize: 16,
-    fontWeight: '800',
-    color: '#FFFFFF',
+    fontWeight: '700',
+    color: '#1E3A2B',
+  },
+  statusBadgeStable: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#E9F5EC',
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+    gap: 6,
+  },
+  dotStable: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#2ECC71',
+  },
+  statusTextStable: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#1E3A2B',
+  },
+  
+  // Línea de tiempo
+  timelineRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 14,
+    position: 'relative',
+  },
+  timelineDotGreen: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#2ECC71',
+    marginRight: 10,
+  },
+  timelineDotPurple: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#6C5CE7',
+    marginRight: 10,
+  },
+  timelineDotGray: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#BDC3C7',
+    marginRight: 10,
+  },
+  timelineTime: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#828B84',
+    width: 44,
+  },
+  timelineItemTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#1E3A2B',
+  },
+  timelineItemSub: {
+    fontSize: 11,
+    color: '#828B84',
+  },
+  badgeSoon: {
+    backgroundColor: '#F3E8FF',
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+  },
+  badgeSoonText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#6C5CE7',
+  },
+  verAgendaButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F9FBF9',
+    paddingVertical: 12,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E2E8E0',
+    gap: 4,
+  },
+  verAgendaText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#1E3A2B',
   },
 
-  // Tarjetas de Alertas y Novedades
+  // Alertas y Novedades
   alertsCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 16,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 30,
   },
   emptyStateBox: {
     paddingVertical: 14,
@@ -307,7 +447,39 @@ export const dashboardCuidadorStyles = StyleSheet.create({
     textAlign: 'center',
     fontStyle: 'italic',
   },
+  alertItemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingVertical: 6,
+  },
+  alertIconOrange: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: '#FEF5E7',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  alertIconBlue: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: '#EBF5FB',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  alertItemTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#1E3A2B',
+  },
+  alertItemSub: {
+    fontSize: 11,
+    color: '#828B84',
+  },
 
+  // Footer y Navegación Inferior
   fixedBottomFooter: {
     position: 'absolute',
     bottom: 0,
@@ -316,7 +488,7 @@ export const dashboardCuidadorStyles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingTop: 12,
     paddingBottom: 20,
-    paddingHorizontal: 16, // Padding general para que todo respire
+    paddingHorizontal: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -6 },
     shadowOpacity: 0.08,
@@ -324,7 +496,6 @@ export const dashboardCuidadorStyles = StyleSheet.create({
     elevation: 10,
     zIndex: 999,
   },
-
   emergencyRow: {
     flexDirection: 'row',
     gap: 8,
@@ -333,7 +504,6 @@ export const dashboardCuidadorStyles = StyleSheet.create({
     padding: 6,                 
     borderRadius: 16,           
   },
-
   emergencyBtnRed: {
     flex: 1,
     backgroundColor: '#CF4444',
@@ -411,5 +581,32 @@ export const dashboardCuidadorStyles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: '#1E3A2B',
     marginTop: 2,
+  },
+
+  // Clases para el encabezado de la tarjeta de IA
+  aiHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 14,
+  },
+  aiIconBadge: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: '#E2EFE7',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  aiSubtitle: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#A7D7B5',
+    letterSpacing: 0.5,
+  },
+  aiHeaderTitle: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: '#FFFFFF',
   },
 });
